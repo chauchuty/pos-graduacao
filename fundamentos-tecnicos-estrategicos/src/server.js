@@ -3,8 +3,31 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+const users = []
+
 const server = http.createServer((req, res) => {
-    res.end('Hello World')
+    const { method, url } = req
+
+
+    if (method === 'GET' && url === '/users') {
+        return res
+                .setHeader('Content-Type', 'application/json')
+                .end(JSON.stringify(users, null, 2))
+    }
+
+    if (method === 'POST' && url === '/users') {
+        users.push({
+            id: 1,
+            name: 'John Doe',
+            email: 'joe@gmail.com'
+        })
+        return res
+                .writeHead(201)
+                .end('Criação de usuários')
+    }
+    res
+        .writeHead(404)
+        .end('Not found')
 })
 
 server.listen(3000, () => {
