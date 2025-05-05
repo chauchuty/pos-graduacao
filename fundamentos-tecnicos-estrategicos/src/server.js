@@ -1,41 +1,37 @@
 import http from 'node:http'
 import dotenv from 'dotenv'
-
+import { Database } from './database.js'
+import { json } from './utils/utils.js'
+import { randomUUID } from 'node:crypto'
 dotenv.config()
 
-const users = []
+const database = new Database()
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req
-    const buffers = []
-    
-    for await (const chunk of req) {
-        buffers.push(chunk)
-    }
 
-    try {
-        req.body = Buffer.concat(buffers).toString()
-    } catch {
-        req.body = null
-    }
-
-    console.log(req.body)
+    await json(res, req)
 
     if (method === 'GET' && url === '/users') {
+        const users = database.select('users')
+
         return res
-                .setHeader('Content-Type', 'application/json')
-                .end(JSON.stringify(users, null, 2))
+            .end(JSON.stringify(users, null, 2))
     }
 
     if (method === 'POST' && url === '/users') {
-        users.push({
-            id: 1,
-            name: 'John Doe',
-            email: 'joe@gmail.com'
-        })
+        const { name, email } = req.body
+        const user = {
+            id: randomUUID(),
+            name,
+            email
+        }
+
+        database.insert('users', user)
+
         return res
-                .writeHead(201)
-                .end('Criação de usuários')
+            .writeHead(201)
+            .end('Criação de usuários')
     }
     res
         .writeHead(404)
