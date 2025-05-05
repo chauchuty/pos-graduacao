@@ -5,9 +5,21 @@ dotenv.config()
 
 const users = []
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     const { method, url } = req
+    const buffers = []
+    
+    for await (const chunk of req) {
+        buffers.push(chunk)
+    }
 
+    try {
+        req.body = Buffer.concat(buffers).toString()
+    } catch {
+        req.body = null
+    }
+
+    console.log(req.body)
 
     if (method === 'GET' && url === '/users') {
         return res
