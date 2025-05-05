@@ -1,0 +1,17 @@
+{
+  "name": "fundamentos-tecnicos-estrategicos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch .",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0"
+  }
+}
