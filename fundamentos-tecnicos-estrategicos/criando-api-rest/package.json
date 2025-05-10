@@ -1,0 +1,22 @@
+{
+  "name": "criando-api-rest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsc && node dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "fastify": "^5.3.2"
+  }
+}
