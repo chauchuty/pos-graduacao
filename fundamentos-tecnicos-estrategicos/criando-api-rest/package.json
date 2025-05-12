@@ -5,9 +5,10 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "start": "tsc && node dist/server.js",
+    "start": "node dist/server.js",
     "knex": "node --import tsx ./node_modules/knex/bin/cli.js",
     "lint": "eslint src -e .ts",
+    "build": "tsup src",
     "test": "vitest"
   },
   "keywords": [],
@@ -18,6 +19,7 @@
     "@types/node": "^22.15.17",
     "@types/supertest": "^6.0.3",
     "supertest": "^7.1.1",
+    "tsup": "^8.4.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "vitest": "^3.1.3"

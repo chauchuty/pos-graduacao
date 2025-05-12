@@ -1,7 +1,6 @@
 import { test, expect, beforeAll, afterAll, describe, it, beforeEach } from 'vitest'
 import { execSync } from 'node:child_process'
 import { app } from '../src/app'
-import { db } from '../src/database'
 import request from 'supertest'
 
 describe('Transactions Routes', () => {

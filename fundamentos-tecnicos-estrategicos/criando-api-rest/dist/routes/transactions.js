@@ -1,10 +1,12 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -13,17 +15,14 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/app.ts
-var import_fastify = __toESM(require("fastify"));
+// src/routes/transactions.ts
+var transactions_exports = {};
+__export(transactions_exports, {
+  transactinsRoutes: () => transactinsRoutes
+});
+module.exports = __toCommonJS(transactions_exports);
 
 // src/database.ts
 var import_config = require("dotenv/config");
@@ -79,8 +78,8 @@ async function checkSessionIdExists(req, res) {
 }
 
 // src/routes/transactions.ts
-async function transactinsRoutes(app2) {
-  app2.get("/", {
+async function transactinsRoutes(app) {
+  app.get("/", {
     preHandler: [checkSessionIdExists]
   }, async (req, res) => {
     const sessionId = req.cookies.sessionId;
@@ -90,7 +89,7 @@ async function transactinsRoutes(app2) {
       total: transactions.length
     };
   });
-  app2.get("/:id", {
+  app.get("/:id", {
     preHandler: [checkSessionIdExists]
   }, async (req) => {
     const sessionId = req.cookies.sessionId;
@@ -106,7 +105,7 @@ async function transactinsRoutes(app2) {
       transaction
     };
   });
-  app2.get("/summary", {
+  app.get("/summary", {
     preHandler: [checkSessionIdExists]
   }, async (req, res) => {
     const sessionId = req.cookies.sessionId;
@@ -115,7 +114,7 @@ async function transactinsRoutes(app2) {
       summary
     };
   });
-  app2.post("/", async (req, res) => {
+  app.post("/", async (req, res) => {
     const createTransactionBody = import_zod2.z.object({
       title: import_zod2.z.string(),
       amount: import_zod2.z.coerce.number(),
@@ -140,7 +139,7 @@ async function transactinsRoutes(app2) {
     });
     return res.status(201).send("Transa\xE7\xE3o criada com sucesso");
   });
-  app2.delete("/:id", async (req, res) => {
+  app.delete("/:id", async (req, res) => {
     const getTransactionParams = import_zod2.z.object({
       id: import_zod2.z.string().uuid()
     });
@@ -149,21 +148,7 @@ async function transactinsRoutes(app2) {
     return res.status(204).send("Transa\xE7\xE3o deletada com sucesso");
   });
 }
-
-// src/app.ts
-var import_cookie = __toESM(require("@fastify/cookie"));
-var app = (0, import_fastify.default)();
-app.register(import_cookie.default);
-app.register(transactinsRoutes, {
-  prefix: "transactions"
-});
-app.addHook("preHandler", async (req, res) => {
-  console.log(`[${req.method}] ${req.url}`);
-});
-
-// src/server.ts
-app.listen({
-  port: env.PORT
-}).then(() => {
-  console.log(`Server is running on ${env.HOST}:${env.PORT}`);
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  transactinsRoutes
 });
