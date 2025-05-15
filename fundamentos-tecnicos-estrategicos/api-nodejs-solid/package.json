@@ -1,0 +1,24 @@
+{
+  "name": "api-nodejs-solid",
+  "version": "1.0.0",
+  "description": "GymPass Style App",
+  "main": "./src/server.ts",
+  "scripts": {
+    "start:dev": "tsx watch .",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "fastify": "^5.3.3"
+  }
+}
